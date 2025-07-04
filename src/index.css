@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Globalne style */
+body {
+  background-color: white;
+  color: black;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Pola tekstowe, liczby i selecty */
+input[type="text"],
+input[type="number"],
+select {
+  @apply border border-gray-300 rounded px-3 py-2 w-full text-black bg-white;
+}
+
+/* Checkbox */
+input[type="checkbox"] {
+  @apply accent-blue-600;
+}
+
+/* Etykiety */
+label {
+  @apply text-sm text-black;
+}
+
+/* Przycisk */
+button {
+  @apply transition-all duration-200 text-black;
+}
