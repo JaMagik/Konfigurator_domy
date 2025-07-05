@@ -1,21 +1,7 @@
 import React, { useState } from "react";
+import { exteriorOptions } from "../data/configOptions";
 
-const elewacje = [
-  { name: "Tynk", image: "/images/elewacja/tynk.png" },
-  { name: "Deska elewacyjna", image: "/images/elewacja/deska.png" },
-  { name: "Płyty HPL", image: "/images/elewacja/plyty.png" },
-];
-
-const dachy = [
-  { name: "Blachodachówka", image: "/images/dach/blacha.jpg" },
-  { name: "Panel na rąbek", image: "/images/dach/ranbek.jpg" },
-  { name: "Papa termozgrzewalna", image: "/images/dach/papa.jpg" },
-];
-
-const stolarka = [
-  { name: "PCV 3-szybowa", image: "/images/stolarka/pcv.jpeg" },
-  { name: "Aluminium", image: "/images/stolarka/aluminium.png" },
-];
+const { elewacja: elewacje, dach: dachy, stolarka } = exteriorOptions;
 
 
 const ExteriorForm = ({ onSubmit, onBack }) => {
