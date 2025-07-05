@@ -31,11 +31,15 @@ const Summary = ({
         : null;
       if (!format) return null;
       const data = await new Promise((resolve) => {
+
+      return await new Promise((resolve) => {
+
         const reader = new FileReader();
         reader.onloadend = () => resolve(reader.result);
         reader.readAsDataURL(blob);
       });
       return { data, format };
+
     } catch {
       return null;
     }
@@ -123,6 +127,11 @@ const Summary = ({
       if (imgUrl) {
         const result = await getImageData(imgUrl);
         if (result) pdf.addImage(result.data, result.format, pageWidth - 60, y - 5, 50, 30);
+
+
+        const data = await getImageData(imgUrl);
+        if (data) pdf.addImage(data, "PNG", pageWidth - 60, y - 5, 50, 30);
+
       }
       y += 40;
       if (y > 250) {
@@ -144,6 +153,14 @@ const Summary = ({
       if (imgUrl) {
         const result = await getImageData(imgUrl);
         if (result) pdf.addImage(result.data, result.format, pageWidth - 60, y - 5, 50, 30);
+
+        const result = await getImageData(imgUrl);
+        if (result) pdf.addImage(result.data, result.format, pageWidth - 60, y - 5, 50, 30);
+
+        const data = await getImageData(imgUrl);
+        if (data) pdf.addImage(data, "PNG", pageWidth - 60, y - 5, 50, 30);
+
+
       }
       y += 40;
       if (y > 250) {
@@ -165,6 +182,10 @@ const Summary = ({
       if (imgUrl) {
         const result = await getImageData(imgUrl);
         if (result) pdf.addImage(result.data, result.format, pageWidth - 60, y - 5, 50, 30);
+
+
+        const data = await getImageData(imgUrl);
+        if (data) pdf.addImage(data, "PNG", pageWidth - 60, y - 5, 50, 30);
       }
       y += 40;
       if (y > 250) {
@@ -211,6 +232,21 @@ const Summary = ({
           }[landData.rodzajBudowy] || "Nieokreślono"}</p>
           {/* Status działki został usunięty w formularzu gruntu */}
         </section>
+      {/* Działka */}
+<section className="mb-6">
+  <h3 className="text-xl font-semibold mb-2 text-gray-700">📍 Działka i lokalizacja</h3>
+  <p><strong>Lokalizacja:</strong> {landData.lokalizacja || "Brak"}</p>
+  <p><strong>Posiadasz działkę:</strong> {{
+    tak: "Tak",
+    zakup: "W trakcie zakupu",
+    nie: "Nie"
+  }[landData.posiadanie] || "Nieokreślono"}</p>
+  <p><strong>Rodzaj budowy:</strong> {{
+    zgłoszenie: "Budowa na zgłoszenie",
+    pozwolenie: "Pozwolenie na budowę"
+  }[landData.rodzajBudowy] || "Nieokreślono"}</p>
+  {/* Status działki został usunięty w formularzu gruntu */}
+</section>
 
 
         {/* Instalacje */}
