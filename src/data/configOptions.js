@@ -11,53 +11,94 @@ export const installationOptions = {
   { "name": "wentylacja grawitacyjna", "image": "/images/wentylacja/grawitacyjna.webp" },
   { "name": "wentylacja mechaniczna z rekuperacją", "image": "/images/wentylacja/reku.jpeg" }
 ],
-"Elektryka": [
- { "name": "Podstawowa instalacja", "image": "/images/elektryka/podstawowa.jpg" },
- { "name": "Rozszerzony pakiet (projekt indywidualny, smart home)", "image": "/images/elektryka/rozszerzony.jpg" },
-],
+ "Elektryka": [
+  {
+    name: "Podstawowa instalacja",
+    image: "https://placehold.co/300x200?text=elektryka+podstawowa"
+  },
+  {
+    name: "Rozszerzony pakiet (projekt indywidualny, smart home)",
+    image: "https://placehold.co/300x200?text=elektryka+pakiet"
+  }
+ ],
 
-"Fotowoltaika": [
-  { "name": "Brak", "image": "/images/pv/brak.jpg" },
-  { "name": "3 kWp", "image": "/images/pv/3kwp.jpg" },
-  { "name": "10 kWp", "image": "/images/pv/10kwp.jpg" }
-],
-"Klimatyzacja": [
-  { "name": "Brak", "image": "/images/klima/brak.jpg" },
-  { "name": "W pakiecie", "image": "/images/klima/pakiet.jpg" }
-]
+ "Fotowoltaika": [
+  { name: "Brak", image: "https://placehold.co/300x200?text=pv+brak" },
+  { name: "3 kWp", image: "https://placehold.co/300x200?text=pv+3kWp" },
+  { name: "10 kWp", image: "https://placehold.co/300x200?text=pv+10kWp" }
+ ],
+ "Klimatyzacja": [
+  { name: "Brak", image: "https://placehold.co/300x200?text=klima+brak" },
+  { name: "W pakiecie", image: "https://placehold.co/300x200?text=klima+pakiet" }
+ ]
 };
   
 export const finishOptions = {
   "Ściany wewnętrzne": [
-    { name: "płyta + szpachlowanie", image: "/assets/finish/sciana1.jpg" },
-    { name: "płyta + szpachlowanie + malowanie", image: "/assets/finish/sciana2.jpg" },
+    {
+      name: "płyta + szpachlowanie",
+      image: "https://placehold.co/300x200?text=sciana+1"
+    },
+    {
+      name: "płyta + szpachlowanie + malowanie",
+      image: "https://placehold.co/300x200?text=sciana+2"
+    },
     
   ],
   "Sufit podwieszany": [
-    { name: "1 płyta + szpachlowanie + malowanie", image: "/assets/finish/sufit1.jpg" },
+    {
+      name: "1 płyta + szpachlowanie + malowanie",
+      image: "https://placehold.co/300x200?text=sufit+1"
+    },
 
   ],
   "Drzwi wewnętrzne": [
-    { name: "wersja light", image: "/assets/finish/drzwi-light.jpg" },
-    { name: "wersja prestige", image: "/assets/finish/drzwi-prestige.jpg" },
+    { name: "wersja light", image: "https://placehold.co/300x200?text=drzwi+light" },
+    {
+      name: "wersja prestige",
+      image: "https://placehold.co/300x200?text=drzwi+prestige"
+    },
   ],
   "Schody": [
-    { name: "schody sosnowe", image: "/assets/finish/schody-sosna.jpg" },
-    { name: "schody dębowe", image: "/assets/finish/schody-debowe.jpg" },
+    { name: "schody sosnowe", image: "https://placehold.co/300x200?text=schody+sosna" },
+    { name: "schody dębowe", image: "https://placehold.co/300x200?text=schody+debowe" },
   ],
   "Projekt wnętrz": [
-    { name: "indywidualny projekt wnętrz", image: "/assets/finish/wnetrza-projekt.jpg" },
-    { name: "zabudowa meblowa", image: "/assets/finish/wnetrza-meble.jpg" },
-    { name: "AGD/RTV", image: "/assets/finish/agd-rtv.jpg" },
+    {
+      name: "indywidualny projekt wnętrz",
+      image: "https://placehold.co/300x200?text=projekt+wnetrz"
+    },
+    {
+      name: "zabudowa meblowa",
+      image: "https://placehold.co/300x200?text=wnetrze+meble"
+    },
+    { name: "AGD/RTV", image: "https://placehold.co/300x200?text=AGD+RTV" },
   ],
   "Kuchnia": [
-    { name: "zabudowa kuchenna", image: "/assets/finish/kuchnia-meble.jpg" },
-    { name: "AGD", image: "/assets/finish/kuchnia-agd.jpg" },
+    { name: "zabudowa kuchenna", image: "https://placehold.co/300x200?text=kuchnia+meble" },
+    { name: "AGD", image: "https://placehold.co/300x200?text=AGD" },
   ],
   "Łazienka": [
-    { name: "płytki", image: "/assets/finish/lazienka-plytki.jpg" },
-    { name: "biały montaż", image: "/assets/finish/lazienka-bialy.jpg" },
-    { name: "zabudowa łazienkowa", image: "/assets/finish/lazienka-meble.jpg" },
+    { name: "płytki", image: "https://placehold.co/300x200?text=plytki" },
+    { name: "biały montaż", image: "https://placehold.co/300x200?text=bialy+montaz" },
+    { name: "zabudowa łazienkowa", image: "https://placehold.co/300x200?text=lazienka+meble" },
+  ]
+};
+
+export const exteriorOptions = {
+  elewacja: [
+    { name: "Tynk", image: "/images/elewacja/tynk.png" },
+    { name: "Deska elewacyjna", image: "/images/elewacja/deska.png" },
+    { name: "Płyty HPL", image: "/images/elewacja/plyty.png" }
+  ],
+  dach: [
+    { name: "Blachodachówka", image: "/images/dach/blacha.jpg" },
+    { name: "Panel na rąbek", image: "/images/dach/ranbek.jpg" },
+    { name: "Papa termozgrzewalna", image: "/images/dach/papa.jpg" }
+  ],
+  stolarka: [
+    { name: "PCV 3-szybowa", image: "/images/stolarka/pcv.jpeg" },
+    { name: "Aluminium", image: "/images/stolarka/aluminium.png" }
   ]
 };
 

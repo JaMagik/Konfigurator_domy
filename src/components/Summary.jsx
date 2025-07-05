@@ -1,7 +1,11 @@
 import React, { useRef } from "react";
-import { priceList } from "../data/configOptions";
+import {
+  priceList,
+  installationOptions,
+  finishOptions,
+  exteriorOptions
+} from "../data/configOptions";
 import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 
 const Summary = ({
   metraz,
@@ -12,6 +16,37 @@ const Summary = ({
   onBack,
 }) => {
   const pdfRef = useRef();
+
+  const getImageData = async (url) => {
+    try {
+      const res = await fetch(url);
+      const blob = await res.blob();
+      const type = blob.type;
+      const format = type.includes("png")
+        ? "PNG"
+        : type.includes("jpeg") || type.includes("jpg")
+        ? "JPEG"
+        : type.includes("webp")
+        ? "WEBP"
+        : null;
+      if (!format) return null;
+      const data = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
+      return { data, format };
+    } catch {
+      return null;
+    }
+  };
+
+  const findImage = (options, category, name) => {
+    const opts = options[category];
+    if (!opts) return null;
+    const found = opts.find((o) => o.name === name);
+    return found ? found.image : null;
+  };
 
   const calculateTotal = () => {
     let total = 0;
@@ -43,17 +78,109 @@ const Summary = ({
 
   const totalCost = calculateTotal();
 
-  const handleDownloadPDF = () => {
-    const input = pdfRef.current;
-    html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "mm", "a4");
-      const imgProps = pdf.getImageProperties(imgData);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save("wycena_dom_modulowy.pdf");
-    });
+  const handleDownloadPDF = async () => {
+    const pdf = new jsPDF("p", "mm", "a4");
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const center = pageWidth / 2;
+
+    pdf.setFontSize(18);
+    pdf.text("Podsumowanie wyceny", center, 20, { align: "center" });
+    pdf.setFontSize(12);
+    pdf.text(`Całkowity koszt: ${totalCost.toLocaleString("pl-PL")} zł`, center, 30, { align: "center" });
+
+    // Metraż
+    pdf.addPage();
+    pdf.setFontSize(16);
+    pdf.text("Metraż", 10, 20);
+    pdf.setFontSize(12);
+    pdf.text(metraz, 10, 30);
+
+    // Działka
+    pdf.addPage();
+    pdf.setFontSize(16);
+    pdf.text("Działka i lokalizacja", 10, 20);
+    pdf.setFontSize(12);
+    pdf.text(`Lokalizacja: ${landData.lokalizacja || "Brak"}`, 10, 30);
+    pdf.text(`Posiadasz działkę: ${{
+      tak: "Tak",
+      zakup: "W trakcie zakupu",
+      nie: "Nie"
+    }[landData.posiadanie] || "Nieokreślono"}`, 10, 40);
+    pdf.text(`Rodzaj budowy: ${{
+      zgłoszenie: "Budowa na zgłoszenie",
+      pozwolenie: "Pozwolenie na budowę"
+    }[landData.rodzajBudowy] || "Nieokreślono"}`, 10, 50);
+
+    // Instalacje
+    pdf.addPage();
+    pdf.setFontSize(16);
+    pdf.text("Instalacje", 10, 20);
+    let y = 30;
+    for (const [category, item] of Object.entries(installations)) {
+      pdf.setFontSize(12);
+      pdf.text(`${category}: ${item || "Brak"}`, 10, y);
+      const imgUrl = findImage(installationOptions, category, item);
+      if (imgUrl) {
+        const result = await getImageData(imgUrl);
+        if (result) pdf.addImage(result.data, result.format, pageWidth - 60, y - 5, 50, 30);
+      }
+      y += 40;
+      if (y > 250) {
+        pdf.addPage();
+        pdf.text("Instalacje", 10, 20);
+        y = 30;
+      }
+    }
+
+    // Wykończenie wnętrz
+    pdf.addPage();
+    pdf.setFontSize(16);
+    pdf.text("Wykończenie wnętrz", 10, 20);
+    y = 30;
+    for (const [category, item] of Object.entries(finishings)) {
+      pdf.setFontSize(12);
+      pdf.text(`${category}: ${item || "Brak"}`, 10, y);
+      const imgUrl = findImage(finishOptions, category, item);
+      if (imgUrl) {
+        const result = await getImageData(imgUrl);
+        if (result) pdf.addImage(result.data, result.format, pageWidth - 60, y - 5, 50, 30);
+      }
+      y += 40;
+      if (y > 250) {
+        pdf.addPage();
+        pdf.text("Wykończenie wnętrz", 10, 20);
+        y = 30;
+      }
+    }
+
+    // Wykończenie zewnętrzne
+    pdf.addPage();
+    pdf.setFontSize(16);
+    pdf.text("Wykończenie zewnętrzne", 10, 20);
+    y = 30;
+    for (const [category, item] of Object.entries(exterior)) {
+      pdf.setFontSize(12);
+      pdf.text(`${category}: ${item || "Brak"}`, 10, y);
+      const imgUrl = findImage(exteriorOptions, category, item);
+      if (imgUrl) {
+        const result = await getImageData(imgUrl);
+        if (result) pdf.addImage(result.data, result.format, pageWidth - 60, y - 5, 50, 30);
+      }
+      y += 40;
+      if (y > 250) {
+        pdf.addPage();
+        pdf.text("Wykończenie zewnętrzne", 10, 20);
+        y = 30;
+      }
+    }
+
+    pdf.addPage();
+    pdf.setFontSize(18);
+    pdf.text("Całkowity koszt", center, 40, { align: "center" });
+    pdf.setFontSize(16);
+    pdf.text(`${totalCost.toLocaleString("pl-PL")} zł`, center, 60, { align: "center" });
+
+    pdf.save("wycena_dom_modulowy.pdf");
   };
 
   return (
@@ -83,20 +210,16 @@ const Summary = ({
     zgłoszenie: "Budowa na zgłoszenie",
     pozwolenie: "Pozwolenie na budowę"
   }[landData.rodzajBudowy] || "Nieokreślono"}</p>
-  <p><strong>Status działki:</strong> {
-    landData.status && landData.status.length > 0
-      ? landData.status.join(", ")
-      : "Brak"
-  }</p>
+  {/* Status działki został usunięty w formularzu gruntu */}
 </section>
 
 
         {/* Instalacje */}
         <section className="mb-6">
           <h3 className="text-xl font-semibold mb-2 text-gray-700">🔌 Instalacje</h3>
-          {Object.entries(installations).map(([category, items]) => (
+          {Object.entries(installations).map(([category, item]) => (
             <div key={category}>
-              <strong>{category}:</strong> {items.join(", ")}
+              <strong>{category}:</strong> {item || "Brak"}
             </div>
           ))}
         </section>
@@ -104,9 +227,9 @@ const Summary = ({
         {/* Wykończenie wnętrz */}
         <section className="mb-6">
           <h3 className="text-xl font-semibold mb-2 text-gray-700">🎨 Wykończenie wnętrz</h3>
-          {Object.entries(finishings).map(([category, items]) => (
+          {Object.entries(finishings).map(([category, item]) => (
             <div key={category}>
-              <strong>{category}:</strong> {items.join(", ")}
+              <strong>{category}:</strong> {item || "Brak"}
             </div>
           ))}
         </section>
