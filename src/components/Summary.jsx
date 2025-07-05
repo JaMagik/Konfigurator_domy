@@ -83,20 +83,16 @@ const Summary = ({
     zgłoszenie: "Budowa na zgłoszenie",
     pozwolenie: "Pozwolenie na budowę"
   }[landData.rodzajBudowy] || "Nieokreślono"}</p>
-  <p><strong>Status działki:</strong> {
-    landData.status && landData.status.length > 0
-      ? landData.status.join(", ")
-      : "Brak"
-  }</p>
+  {/* Status działki został usunięty w formularzu gruntu */}
 </section>
 
 
         {/* Instalacje */}
         <section className="mb-6">
           <h3 className="text-xl font-semibold mb-2 text-gray-700">🔌 Instalacje</h3>
-          {Object.entries(installations).map(([category, items]) => (
+          {Object.entries(installations).map(([category, item]) => (
             <div key={category}>
-              <strong>{category}:</strong> {items.join(", ")}
+              <strong>{category}:</strong> {item || "Brak"}
             </div>
           ))}
         </section>
@@ -104,9 +100,9 @@ const Summary = ({
         {/* Wykończenie wnętrz */}
         <section className="mb-6">
           <h3 className="text-xl font-semibold mb-2 text-gray-700">🎨 Wykończenie wnętrz</h3>
-          {Object.entries(finishings).map(([category, items]) => (
+          {Object.entries(finishings).map(([category, item]) => (
             <div key={category}>
-              <strong>{category}:</strong> {items.join(", ")}
+              <strong>{category}:</strong> {item || "Brak"}
             </div>
           ))}
         </section>
