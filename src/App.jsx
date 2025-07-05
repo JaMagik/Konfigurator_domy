@@ -17,7 +17,6 @@ function App() {
   const [installations, setInstallations] = useState({});
   const [finishings, setFinishings] = useState({});
   const [exterior, setExterior] = useState({});
-  const [contact, setContact] = useState({});
 
   const handleNextStep = () => setStep((prev) => prev + 1);
   const handlePrevStep = () => setStep((prev) => prev - 1);
@@ -114,8 +113,7 @@ function App() {
 
         {step === 99 && (
           <ContactForm
-            onSubmit={(data) => {
-              setContact(data);
+            onSubmit={() => {
               alert("Dziękujemy za przesłanie formularza! Skontaktujemy się wkrótce.");
               if (isCustomPath) {
                 setStep(1); // Wróć do początku
