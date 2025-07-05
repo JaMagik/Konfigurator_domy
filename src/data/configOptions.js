@@ -99,6 +99,7 @@ export const exteriorOptions = {
   stolarka: [
     { name: "PCV 3-szybowa", image: "/images/stolarka/pcv.jpeg" },
     { name: "Aluminium", image: "/images/stolarka/aluminium.png" }
+
   ]
 };
 
