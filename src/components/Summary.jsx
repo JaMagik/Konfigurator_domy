@@ -31,11 +31,13 @@ const Summary = ({
         : null;
       if (!format) return null;
       const data = await new Promise((resolve) => {
+
+      return await new Promise((resolve) => {
         const reader = new FileReader();
         reader.onloadend = () => resolve(reader.result);
         reader.readAsDataURL(blob);
       });
-      return { data, format };
+
     } catch {
       return null;
     }
@@ -123,6 +125,10 @@ const Summary = ({
       if (imgUrl) {
         const result = await getImageData(imgUrl);
         if (result) pdf.addImage(result.data, result.format, pageWidth - 60, y - 5, 50, 30);
+
+        const data = await getImageData(imgUrl);
+        if (data) pdf.addImage(data, "PNG", pageWidth - 60, y - 5, 50, 30);
+
       }
       y += 40;
       if (y > 250) {
@@ -142,8 +148,13 @@ const Summary = ({
       pdf.text(`${category}: ${item || "Brak"}`, 10, y);
       const imgUrl = findImage(finishOptions, category, item);
       if (imgUrl) {
+
         const result = await getImageData(imgUrl);
         if (result) pdf.addImage(result.data, result.format, pageWidth - 60, y - 5, 50, 30);
+
+        const data = await getImageData(imgUrl);
+        if (data) pdf.addImage(data, "PNG", pageWidth - 60, y - 5, 50, 30);
+
       }
       y += 40;
       if (y > 250) {
@@ -165,6 +176,9 @@ const Summary = ({
       if (imgUrl) {
         const result = await getImageData(imgUrl);
         if (result) pdf.addImage(result.data, result.format, pageWidth - 60, y - 5, 50, 30);
+
+        const data = await getImageData(imgUrl);
+        if (data) pdf.addImage(data, "PNG", pageWidth - 60, y - 5, 50, 30);
       }
       y += 40;
       if (y > 250) {
