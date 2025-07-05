@@ -4,8 +4,7 @@ const LandForm = ({ onSubmit, onBack }) => {
   const [formData, setFormData] = useState({
     lokalizacja: "",
     posiadanie: "", // "tak", "nie", "zakup"
-    rodzajBudowy: "", // "zgłoszenie", "pozwolenie"
-    status: []
+    rodzajBudowy: "" // "zgłoszenie", "pozwolenie"
   });
 
   const handleChange = (e) => {
@@ -17,19 +16,6 @@ const LandForm = ({ onSubmit, onBack }) => {
     }));
   };
 
-  const handleStatusChange = (value) => {
-    setFormData((prev) => {
-      const current = prev.status;
-      const updated = current.includes(value)
-        ? current.filter((v) => v !== value)
-        : [...current, value];
-
-      return {
-        ...prev,
-        status: updated
-      };
-    });
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
