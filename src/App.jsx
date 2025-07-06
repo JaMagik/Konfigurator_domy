@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import MetrazForm from "./components/MetrazForm";
 import LandForm from "./components/LandForm";
-import InstallationForm from "./components/📄 InstallationForm";
+// src/App.jsx
+import InstallationForm from "./components/InstallationForm";
 import FinishForm from "./components/FinishForm";
 import ExteriorForm from "./components/ExteriorForm";
 import Summary from "./components/Summary";
